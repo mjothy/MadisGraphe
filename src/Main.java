@@ -6,23 +6,19 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) throws IOException{
+        //génération du fichier dot
         Generator generator = new Generator("doc/test.dot",5);
-        generator.generate();
-        File fichier = new File("doc/nomFichier.dot");
-        FormatGraphe formatGraphe = new FormatGraphe(fichier);
-        for(Noeud noeud : formatGraphe.graphe.listeNoeuds){
-            for(int i=0; i<noeud.getNbSucc(); i++){
-                noeud.capacites.set(i,(int) (Math.random()*10));
-            }
-        }
-        formatGraphe.ecrireGraphe("doc/nomFichier.dot");
-        int[][] pi = Bellman.resolution(formatGraphe.graphe);
+
+        //application de l'algo
+        int[][] pi = Bellman.resolution(generator.formatGraphe.graphe);
+
+        //print pi
         for(int i=0;i<pi.length;i++){
             for(int j=0; j<pi.length; j++){
                 if(pi[i][j]>19999){
-                    System.out.print("NOP    ");
+                    System.out.print("NOP\t");
                 }else{
-                    System.out.print(pi[i][j]+"      ");
+                    System.out.print(pi[i][j]+"\t");
                 }
             }
             System.out.println();
